@@ -80,6 +80,7 @@ Paypal.prototype.detail = function(token, payer, callback) {
 		}
 
 		var custom = data.CUSTOM.split('|');
+		var details = data;
 		
 		var params = self.params();
 		params.PAYMENTACTION = 'Sale';
@@ -90,6 +91,7 @@ Paypal.prototype.detail = function(token, payer, callback) {
 		params.METHOD = 'DoExpressCheckoutPayment';
 
 		self.request(self.url, 'POST', params, function(err, data) {
+			data.details = details;
 
 			if (err) {
 				callback(err, data);
