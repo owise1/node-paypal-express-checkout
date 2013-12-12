@@ -28,7 +28,10 @@ var paypal = require('paypal-express-checkout').init('username', 'password', 'si
 // paypal.pay('Invoice nubmer', amout, 'description', 'currency', callback);
 // checkout
 
-paypal.pay('20130001', 123.23, 'iPad', 'EUR', function(err, url) {
+paypal.pay('20130001', 123.23, {
+      NOSHIPPING : 1,
+      DESC : "iPad",
+    }, function(err, url) {
 	
 	if (err) {
 		console.log(err);
