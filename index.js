@@ -108,28 +108,29 @@ Paypal.prototype.detail = function(token, payer, callback) {
 /*
 	Get payment detail
 	@invoiceNumber {String}
-	@amout {Number}
+	@amount {Number}
 	@description {String}
 	@currency {String} :: EUR, USD
 	@callback {Function} :: callback(err, url);
 	return {Paypal}
 */
-Paypal.prototype.pay = function(invoiceNumber, amout, description, currency, callback) {
+Paypal.prototype.pay = function(invoiceNumber, amount, opts, callback) {
 
 	var self = this;
 	var params = self.params();
 
 	params.PAYMENTACTION = 'Sale';
-	params.AMT = prepareNumber(amout);
-	params.RETURNURL = self.returnUrl;
-	params.CANCELURL = self.cancelUrl;
-	params.DESC = description;
-	params.NOSHIPPING = 1;
-	params.ALLOWNOTE = 1;
-	params.CURRENCYCODE = currency;
-	params.METHOD = 'SetExpressCheckout';
-	params.INVNUM = invoiceNumber;
-	params.CUSTOM = invoiceNumber + '|' + params.AMT + '|' + currency;
+	params.AMT           = prepareNumber(amount);
+	params.RETURNURL     = self.returnUrl;
+	params.CANCELURL     = self.cancelUrl;
+	params.DESC          = opts.DESC;
+	params.NOSHIPPING    = opts.NOSHIPPING || 1;
+	params.ALLOWNOTE     = 1;
+	params.CURRENCYCODE  = opts.CURRENCYCODE || 'USD';
+	params.METHOD        = 'SetExpressCheckout';
+	params.INVNUM        = invoiceNumber;
+	params.CUSTOM        = invoiceNumber + '|' + params.AMT + '|' + params.CURRENCYCODE;
+	if(opts.LOGOIMG) params.LOGOIMG = opts.LOGOIMG;
 
 	self.request(self.url, 'POST', params, function(err, data) {
 
