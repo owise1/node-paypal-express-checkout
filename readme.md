@@ -1,14 +1,14 @@
-Node.js PayPal Express checkout for single payment
+Node.js PayPal Express Checkout
 ==================================================
 
-* Simple and easy use
+* Easy to use
 * __No dependencies__
-* [Demo paypal](https://github.com/petersirka/partial.js/tree/master/examples/paypal) with the [partial.js web application framework](https://github.com/petersirka/partial.js)
+* [Full source-code of the eshop with PayPal written in node.js](http://www.totaljs.com/eshop/)
 
 PayPal account
 --------------
 
-![PayPal account](http://partialjs.com/exports/paypal-info.jpg)
+![PayPal account](http://www.totaljs.com/exports/paypal-info.jpg)
 
 <https://developer.paypal.com/webapps/developer/applications/accounts>
 
@@ -20,19 +20,16 @@ $ npm install paypal-express-checkout
 
 ***
 
-```js
-
+```javascript
 var paypal = require('paypal-express-checkout').init('username', 'password', 'signature', 'return url', 'cancel url', [debug]);
 
 // debug = optional, default false
-// paypal.pay('Invoice nubmer', amout, 'description', 'currency', callback);
+// paypal.pay('Invoice nubmer', amout, 'description', 'currency', '(optional) requireAddress: true|false (default)', callback);
 // checkout
 
-paypal.pay('20130001', 123.23, {
-      NOSHIPPING : 1,
-      DESC : "iPad",
-    }, function(err, url) {
-	
+// paypal.pay('20130001', 123.23, 'iPad', 'EUR', function(err, url) {
+// or with "requireAddress": true
+paypal.pay('20130001', 123.23, 'iPad', 'EUR', true, function(err, url) {
 	if (err) {
 		console.log(err);
 		return;
@@ -45,10 +42,10 @@ paypal.pay('20130001', 123.23, {
 // result in GET method
 // paypal.detail('token', 'PayerID', callback);
 // or
-// paypal.detail(partialjs.controller, callback);
+// paypal.detail(totaljs.controller, callback);
 
 paypal.detail('EC-788441863R616634K', '9TM892TKTDWCE', function(err, data, invoiceNumber, price) {
-	
+
 	if (err) {
 		console.log(err);
 		return;
@@ -94,6 +91,18 @@ Processed: A payment has been accepted.
 Voided: This authorization has been voided.
 ```
 
-## Contact
+## How to prevent of pending paymentstatus?
 
-<http://www.petersirka.sk>
+> Login into your bussiness account and click here: https://www.sandbox.paypal.com/ca/cgi-bin/?cmd=_profile-pref&source=acct_setup&fli=true
+
+## Contributors
+
+| Contributor | Type | E-mail |
+|-------------|------|--------|
+| [Peter Širka](https://www.petersirka.eu) | author + support | <petersirka@gmail.com> |
+| [Johann Botha](https://github.com/johannbotha) | contributor | <johannbbotha@gmail.com> |
+
+## License
+
+MIT
+<petersirka@gmail.com>
